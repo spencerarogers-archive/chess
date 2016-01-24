@@ -1,6 +1,17 @@
 defmodule Chess.Piece do
   defstruct name: nil, color: nil
 
+  @white :white
+  @black :black
+
+  def white do
+    @white
+  end
+
+  def black do
+    @black
+  end
+
   [
     :pawn,
     :rook,
