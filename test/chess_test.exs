@@ -4,8 +4,8 @@ defmodule ChessTest do
 
   test "making a valid move" do
     board = Chess.new_board
-    piece = Chess.piece_at(board, :a2)
-    Chess.move(board, :a2, :a3)
-    assert(Chess.piece_at(board, :a2) == piece)
+    piece = Chess.piece_at(board, {:a, 2})
+    Chess.move(board, {:a, 2}, {:a, 3})
+    assert(Chess.piece_at(board, {:a, 2}) == piece)
   end
 end
