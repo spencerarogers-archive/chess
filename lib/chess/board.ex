@@ -13,4 +13,12 @@ defmodule Chess.Board do
       a: %{ 1 => rook(white), 2 => horsey(white), 3 => bishop(white), 4 => queen(white), 5 => king(white), 6 => bishop(white), 7 => horsey(white), 8 => rook(white) }
     }
   end
+
+  def serialize do
+    # TODO
+  end
+
+  def deserialize do
+    # TODO
+  end
 end
