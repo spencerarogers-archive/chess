@@ -12,6 +12,10 @@ defmodule Chess.Piece do
     @black
   end
 
+  def valid_movements(board, {x1,y1}) do
+    [{:c, 1}]
+  end
+
   [
     :pawn,
     :rook,
