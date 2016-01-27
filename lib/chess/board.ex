@@ -1,6 +1,9 @@
 defmodule Chess.Board do
   import Chess.Piece
 
+  @x_axis [ 1,  2,  3,  4,  5,  6,  7,  8]
+  @y_axis [:h, :g, :f, :e, :d, :c, :b, :a]
+
   def new do
     %{
       h: %{1 => r(:b), 2 => k(:b), 3 => b(:b), 4 => q(:b), 5 => k(:b), 6 => b(:b), 7 => k(:b), 8 => r(:b)},
@@ -14,8 +17,21 @@ defmodule Chess.Board do
     }
   end
 
-  def serialize do
-    # TODO
+  def piece_at(board, {x, y}) do
+    board[y][x]
+  end
+
+  require IEx
+  def serialize(board) do
+    @y_axis |> Enum.each fn y ->
+      @x_axis |> Enum.each fn x ->
+        board
+        |> piece_at({x,y})
+        |> piece_to_utf8
+        |> IO.write
+      end
+      IO.write("\n")
+    end
   end
 
   def deserialize do

@@ -26,6 +26,19 @@ defmodule Chess.Piece do
     '♟' => {:p, :b}
   }
 
+  def piece_to_utf8(piece) do
+    case piece do
+      nil ->
+        ' '
+      _ ->
+        @pieces_to_utf8[piece.name][piece.color]
+    end
+  end
+
+  def utf8_to_piece(char) do
+    @utf8_to_piece[char]
+  end
+
   def valid_movements(board, {x1,y1}) do
     [{:c, 1}]
   end
