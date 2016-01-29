@@ -21,16 +21,22 @@ defmodule Chess.Board do
     board[y][x]
   end
 
-  require IEx
   def serialize(board) do
+    {:ok, pid} = StringIO.open("")
+
     @y_axis |> Enum.each fn y ->
       @x_axis |> Enum.each fn x ->
-        board
-        |> piece_at({x,y})
-        |> piece_to_utf8
-        |> IO.write
+        char = board
+               |> piece_at({x,y})
+               |> piece_to_utf8
+
+        IO.write(pid, char)
       end
-      IO.write("\n")
+      IO.write(pid, "\n")
+    end
+
+    StringIO.contents(pid) |> Tuple.to_list |> Enum.each fn row ->
+      IO.write(row)
     end
   end
 
