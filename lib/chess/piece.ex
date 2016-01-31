@@ -3,27 +3,27 @@ defmodule Chess.Piece do
 
   @pieces [:k, :q, :r, :b, :n, :p]
   @pieces_to_utf8 %{
-    :k => %{ :w => '♔', :b => '♚' },
-    :q => %{ :w => '♕', :b => '♛' },
-    :r => %{ :w => '♖', :b => '♜' },
-    :b => %{ :w => '♗', :b => '♝' },
-    :n => %{ :w => '♘', :b => '♞' },
-    :p => %{ :w => '♙', :b => '♟' }
+    :k => %{ :w => "♔", :b => "♚" },
+    :q => %{ :w => "♕", :b => "♛" },
+    :r => %{ :w => "♖", :b => "♜" },
+    :b => %{ :w => "♗", :b => "♝" },
+    :n => %{ :w => "♘", :b => "♞" },
+    :p => %{ :w => "♙", :b => "♟" }
   }
 
   @utf8_to_pieces %{
-    '♔' => {:k, :w},
-    '♕' => {:q, :w},
-    '♖' => {:r, :w},
-    '♗' => {:b, :w},
-    '♘' => {:n, :w},
-    '♙' => {:p, :w},
-    '♚' => {:k, :b},
-    '♛' => {:q, :b},
-    '♜' => {:r, :b},
-    '♝' => {:b, :b},
-    '♞' => {:n, :b},
-    '♟' => {:p, :b}
+    "♔" => {:k, :w},
+    "♕" => {:q, :w},
+    "♖" => {:r, :w},
+    "♗" => {:b, :w},
+    "♘" => {:n, :w},
+    "♙" => {:p, :w},
+    "♚" => {:k, :b},
+    "♛" => {:q, :b},
+    "♜" => {:r, :b},
+    "♝" => {:b, :b},
+    "♞" => {:n, :b},
+    "♟" => {:p, :b}
   }
 
   def piece_to_utf8(piece) do
@@ -36,16 +36,15 @@ defmodule Chess.Piece do
   end
 
   def utf8_to_piece(char) do
-    @utf8_to_piece[char]
+    case @utf8_to_pieces[char] do
+      {name, color} ->
+        %Chess.Piece{name: name, color: color}
+      nil ->
+        nil
+    end
   end
 
   def valid_movements(board, {x1,y1}) do
-    [{:c, 1}]
-  end
-
-  @pieces |> Enum.each fn name ->
-    def unquote(name)(color) do
-      %Chess.Piece{ name: unquote(name), color: color }
-    end
+    [{:a, 3}]
   end
 end

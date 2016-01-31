@@ -1,24 +1,29 @@
 defmodule Chess.Board do
   import Chess.Piece
 
-  @x_axis [ 1,  2,  3,  4,  5,  6,  7,  8]
-  @y_axis [:h, :g, :f, :e, :d, :c, :b, :a]
+  @new_board_path "lib/chess/boards/new.txt"
+
+  @x_axis [:a, :b, :c, :d, :e, :f, :g, :h]
+  @y_axis [8, 7, 6, 5, 4, 3, 2, 1]
 
   def new do
-    %{
-      h: %{1 => r(:b), 2 => k(:b), 3 => b(:b), 4 => q(:b), 5 => k(:b), 6 => b(:b), 7 => k(:b), 8 => r(:b)},
-      g: %{1 => p(:b), 2 => p(:b), 3 => p(:b), 4 => p(:b), 5 => p(:b), 6 => p(:b), 7 => p(:b), 8 => p(:b)},
-      f: %{1 => nil,   2 => nil,   3 => nil,   4 => nil,   5 => nil,   6 => nil,   7 => nil,   8 => nil  },
-      e: %{1 => nil,   2 => nil,   3 => nil,   4 => nil,   5 => nil,   6 => nil,   7 => nil,   8 => nil  },
-      d: %{1 => nil,   2 => nil,   3 => nil,   4 => nil,   5 => nil,   6 => nil,   7 => nil,   8 => nil  },
-      c: %{1 => nil,   2 => nil,   3 => nil,   4 => nil,   5 => nil,   6 => nil,   7 => nil,   8 => nil  },
-      b: %{1 => p(:w), 2 => p(:w), 3 => p(:w), 4 => p(:w), 5 => p(:w), 6 => p(:w), 7 => p(:w), 8 => p(:w)},
-      a: %{1 => r(:w), 2 => k(:w), 3 => b(:w), 4 => q(:w), 5 => k(:w), 6 => b(:w), 7 => k(:w), 8 => r(:w)}
-    }
+    @new_board_path
+    |> File.read!
+    |> deserialize
+  end
+
+  def empty_board do
+    @y_axis |> Enum.reduce %{}, fn y, a1 ->
+      row = @x_axis |> Enum.reduce %{}, fn(x, a2) ->
+                         a2 |> Map.put({x,y}, nil)
+                       end
+
+      Map.merge(a1, row)
+    end
   end
 
   def piece_at(board, {x, y}) do
-    board[y][x]
+    board[{x,y}]
   end
 
   def serialize(board) do
@@ -35,12 +40,29 @@ defmodule Chess.Board do
       IO.write(pid, "\n")
     end
 
-    StringIO.contents(pid) |> Tuple.to_list |> Enum.each fn row ->
+    StringIO.contents(pid)
+    |> Tuple.to_list
+    |> Enum.each fn row ->
       IO.write(row)
     end
   end
 
-  def deserialize do
-    # TODO
+  def deserialize(str) do
+    empty_board
+    |> deserialize(@x_axis, @y_axis, String.next_codepoint(str))
+  end
+  def deserialize(board, [x | x_axis], y_axis, {codepoint, str}) do
+    y = y_axis |> List.first
+
+    board
+    |> Map.put({x,y}, utf8_to_piece(codepoint))
+    |> deserialize(x_axis, y_axis, String.next_codepoint(str))
+  end
+  def deserialize(board, x_axis, [y | y_axis], {"\n", str}) do
+    board
+    |> deserialize(@x_axis, y_axis, String.next_codepoint(str))
+  end
+  def deserialize(board, x_axis, y_axis, nil) do
+    board
   end
 end

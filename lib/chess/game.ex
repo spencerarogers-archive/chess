@@ -21,8 +21,8 @@ defmodule Chess.Game do
         piece = board |> piece_at({x1, y1})
 
         board
-        |> put_in([x1, y1], nil)
-        |> put_in([x2, y2], piece)
+        |> Map.put({x1, y1}, nil)
+        |> Map.put({x2, y2}, piece)
       :invalid ->
         board
     end

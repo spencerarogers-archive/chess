@@ -9,20 +9,20 @@ defmodule GameTest do
   test "a valid move", context do
     board = context[:board]
 
-    piece  = Chess.Board.piece_at(board, {:b, 1})
-    board2 = Chess.Game.move(board, {:b, 1}, {:c, 1})
+    piece  = Chess.Board.piece_at(board, {:a, 2})
+    board2 = Chess.Game.move(board, {:a, 2}, {:a, 3})
 
-    assert(Chess.Board.piece_at(board2, {:c, 1}) == piece)
-    assert(Chess.Board.piece_at(board2, {:b, 1}) == nil)
+    assert(Chess.Board.piece_at(board2, {:a, 3}) == piece)
+    assert(Chess.Board.piece_at(board2, {:a, 2}) == nil)
   end
 
   test "an invalid move", context do
     board = context[:board]
 
-    piece  = Chess.Board.piece_at(board, {:b, 1})
-    board2 = Chess.Game.move(board, {:b, 1}, {:c, 2})
+    piece  = Chess.Board.piece_at(board, {:a, 2})
+    board2 = Chess.Game.move(board, {:a, 2}, {:b, 3})
 
-    assert(Chess.Board.piece_at(board2, {:c, 1}) == nil)
-    assert(Chess.Board.piece_at(board2, {:b, 1}) == piece)
+    assert(Chess.Board.piece_at(board2, {:b, 3}) == nil)
+    assert(Chess.Board.piece_at(board2, {:a, 2}) == piece)
   end
 end
