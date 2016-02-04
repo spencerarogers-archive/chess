@@ -51,6 +51,7 @@ defmodule Chess.Board do
     empty_board
     |> deserialize(@x_axis, @y_axis, String.next_codepoint(str))
   end
+
   def deserialize(board, [x | x_axis], y_axis, {codepoint, str}) do
     y = y_axis |> List.first
 
@@ -58,10 +59,12 @@ defmodule Chess.Board do
     |> Map.put({x,y}, utf8_to_piece(codepoint))
     |> deserialize(x_axis, y_axis, String.next_codepoint(str))
   end
+
   def deserialize(board, x_axis, [y | y_axis], {"\n", str}) do
     board
     |> deserialize(@x_axis, y_axis, String.next_codepoint(str))
   end
+
   def deserialize(board, x_axis, y_axis, nil) do
     board
   end
