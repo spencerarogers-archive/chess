@@ -42,9 +42,7 @@ defmodule Chess.Board do
 
     StringIO.contents(pid)
     |> Tuple.to_list
-    |> Enum.each fn row ->
-      IO.write(row)
-    end
+    |> Enum.join
   end
 
   def deserialize(str) do
