@@ -58,12 +58,12 @@ defmodule Chess.Board do
     |> deserialize(x_axis, y_axis, String.next_codepoint(str))
   end
 
-  def deserialize(board, x_axis, [y | y_axis], {"\n", str}) do
+  def deserialize(board, [], [y | y_axis], {_, str}) do
     board
     |> deserialize(@x_axis, y_axis, String.next_codepoint(str))
   end
 
-  def deserialize(board, x_axis, y_axis, nil) do
+  def deserialize(board, x_axis, [], _) do
     board
   end
 end
