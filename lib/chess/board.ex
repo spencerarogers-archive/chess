@@ -13,13 +13,13 @@ defmodule Chess.Board do
   end
 
   def empty_board do
-    @y_axis |> Enum.reduce %{}, fn y, a1 ->
-      row = @x_axis |> Enum.reduce %{}, fn(x, a2) ->
+    @y_axis |> Enum.reduce(%{}, fn y, a1 ->
+      row = @x_axis |> Enum.reduce(%{}, fn(x, a2) ->
                          a2 |> Map.put({x,y}, nil)
-                       end
+                       end)
 
       Map.merge(a1, row)
-    end
+    end)
   end
 
   def piece_at(board, {x, y}) do
@@ -29,16 +29,16 @@ defmodule Chess.Board do
   def serialize(board) do
     {:ok, pid} = StringIO.open("")
 
-    @y_axis |> Enum.each fn y ->
-      @x_axis |> Enum.each fn x ->
+    @y_axis |> Enum.each(fn y ->
+      @x_axis |> Enum.each(fn x ->
         char = board
                |> piece_at({x,y})
                |> piece_to_utf8
 
         IO.write(pid, char)
-      end
+      end)
       IO.write(pid, "\n")
-    end
+    end)
 
     StringIO.contents(pid)
     |> Tuple.to_list
