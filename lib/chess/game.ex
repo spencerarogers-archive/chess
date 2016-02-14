@@ -1,3 +1,5 @@
+require IEx
+
 defmodule Chess.Game do
   use GenServer
 
@@ -20,18 +22,21 @@ defmodule Chess.Game do
 
     {from, to} = get_move
 
-    active_player =
-      case active_player do
-        :white ->
-          :black
-        :black ->
-          :white
-      end
+    next_player = active_player |> next_player
 
     board
     |> move(from, to)
     |> display_board
-    |> start(active_player)
+    |> start(next_player)
+  end
+
+  def next_player(active_player) do
+    case active_player do
+      :white ->
+        :black
+      :black ->
+        :white
+    end
   end
 
   def display_board(board) do
@@ -61,20 +66,19 @@ defmodule Chess.Game do
         |> Map.put({x1, y1}, nil)
         |> Map.put({x2, y2}, piece)
       :invalid ->
-        board
+        :invalid
     end
   end
 
   def validate_move(board, {x1,y1}, {x2,y2}) do
-    # board
-    # |> Chess.Piece.valid_movements({x1,y1})
-    # |> Enum.member?({x2,y2})
-    # |> case do
-    #   true ->
-    #     :ok
-    #   false ->
-    #     :invalid
-    # end
-    :ok
+    board
+    |> Chess.Piece.valid_movements({x1,y1})
+    |> Enum.member?({x2,y2})
+    |> case do
+       true ->
+         :ok
+       false ->
+         :invalid
+    end
   end
 end
