@@ -18,7 +18,8 @@ defmodule Chess.Cli do
     to_x = IO.gets("Move to (x)") |> String.strip |> String.to_atom
     to_y = IO.gets("Move to (y)") |> String.strip |> String.to_integer
 
-    board = Chess.Game.move(game, {from_x, from_y}, {to_x, to_y})
+    game
+    |> Chess.Game.move({from_x, from_y}, {to_x, to_y})
   end
 
   def display(game) do
