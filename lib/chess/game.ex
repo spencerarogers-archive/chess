@@ -43,12 +43,12 @@ defmodule Chess.Game do
 
 
   def get_move do
-    fromX = IO.gets("Select piece (x)") |> String.strip |> String.to_atom
-    fromY = IO.gets("Select piece (y)") |> String.strip |> String.to_integer
+    from_x = IO.gets("Select piece (x)") |> String.strip |> String.to_atom
+    from_y = IO.gets("Select piece (y)") |> String.strip |> String.to_integer
     IO.puts("move to:")
-    toX = IO.gets("Move to (x)") |> String.strip |> String.to_atom
-    toY = IO.gets("Move to (y)") |> String.strip |> String.to_integer
-    {{fromX, fromY}, {toX, toY}}
+    to_x = IO.gets("Move to (x)") |> String.strip |> String.to_atom
+    to_y = IO.gets("Move to (y)") |> String.strip |> String.to_integer
+    {{from_x, from_y}, {to_x, to_y}}
   end
 
   def move(board, {x1, y1}, {x2, y2}) do
