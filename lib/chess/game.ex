@@ -22,32 +22,31 @@ defmodule Chess.Game do
   end
 
   def move(game, {x1, y1}, {x2, y2}) do
-    board = case validate_move(game.board, {x1,y1}, {x2,y2}) do
+    case validate_move(game.board, {x1,y1}, {x2,y2}) do
       :ok ->
         piece = game.board |> piece_at({x1, y1})
+        board = game.board
+               |> Map.put({x1, y1}, nil)
+               |> Map.put({x2, y2}, piece)
 
-        game.board
-        |> Map.put({x1, y1}, nil)
-        |> Map.put({x2, y2}, piece)
+        player = game.active_player |> next_player
+        game = %Chess.Game{board: board, active_player: player}
+
+        {:ok, game}
       :invalid ->
-        :invalid
+        {:invalid, game}
     end
-
-    player = game.active_player |> next_player
-
-    %Chess.Game{board: board, active_player: player}
   end
 
   def validate_move(board, {x1,y1}, {x2,y2}) do
-    # board
-    # |> Chess.Piece.valid_movements({x1,y1})
-    # |> Enum.member?({x2,y2})
-    # |> case do
-    #    true ->
-    #      :ok
-    #    false ->
-    #      :invalid
-    # end
-    :ok
+    board
+    |> Chess.Piece.valid_movements({x1,y1})
+    |> Enum.member?({x2,y2})
+    |> case do
+       true ->
+         :ok
+       false ->
+         :invalid
+    end
   end
 end

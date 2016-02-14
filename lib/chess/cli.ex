@@ -1,14 +1,19 @@
 defmodule Chess.Cli do
   def start do
-    Chess.Game.new
+    {:ok, Chess.Game.new}
     |> turn
   end
 
-  def turn(game) do
+  def turn({:ok, game}) do
     game
     |> display
     |> move
     |> turn
+  end
+
+  def turn({:invalid, game}) do
+    IO.puts("Invalid move.")
+    turn({:ok, game})
   end
 
   def move(game) do
