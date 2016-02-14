@@ -8,10 +8,9 @@ defmodule Chess.Game do
   end
 
   def start do
-    board = Chess.Board.new
     active_player = :white
 
-    board
+    Chess.Board.new
     |> display_board
     |> start(active_player)
   end
