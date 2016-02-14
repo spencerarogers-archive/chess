@@ -11,7 +11,9 @@ defmodule Chess.Game do
     board = Chess.Board.new
     active_player = :white
 
-    start(board, active_player)
+    board
+    |> display_board
+    |> start(active_player)
   end
 
   def start(board, active_player) do
