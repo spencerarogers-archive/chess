@@ -11,7 +11,7 @@ defmodule Chess.Cli do
     |> turn
   end
 
-  def turn({:invalid, game}) do
+  def turn({:invalid_move, game}) do
     IO.puts("Invalid move.")
     turn({:ok, game})
   end

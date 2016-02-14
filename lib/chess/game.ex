@@ -34,7 +34,7 @@ defmodule Chess.Game do
 
         {:ok, game}
       :invalid ->
-        {:invalid, game}
+        {:invalid_move, game}
     end
   end
 
