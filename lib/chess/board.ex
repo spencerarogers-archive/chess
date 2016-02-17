@@ -3,7 +3,7 @@ defmodule Chess.Board do
 
   @new_board_path "lib/chess/board/new.txt"
 
-  @x_axis [:a, :b, :c, :d, :e, :f, :g, :h]
+  @x_axis [1, 2, 3, 4, 5, 6, 7, 8]
   @y_axis [8, 7, 6, 5, 4, 3, 2, 1]
 
   def new do
@@ -65,5 +65,11 @@ defmodule Chess.Board do
 
   def deserialize(board, x_axis, [], _) do
     board
+  end
+
+  def x_to_int(x) do
+    <<a>> = "a"
+    <<x_int>> = x
+    x_int - a + 1
   end
 end

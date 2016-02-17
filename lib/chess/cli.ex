@@ -17,10 +17,10 @@ defmodule Chess.Cli do
   end
 
   def move(game) do
-    from_x = IO.gets("Select piece (x)") |> String.strip |> String.to_atom
+    from_x = IO.gets("Select piece (x)") |> String.strip |> Chess.Board.x_to_int
     from_y = IO.gets("Select piece (y)") |> String.strip |> String.to_integer
     IO.puts("move to:")
-    to_x = IO.gets("Move to (x)") |> String.strip |> String.to_atom
+    to_x = IO.gets("Move to (x)") |> String.strip |> Chess.Board.x_to_int
     to_y = IO.gets("Move to (y)") |> String.strip |> String.to_integer
 
     game
