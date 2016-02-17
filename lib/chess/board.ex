@@ -1,7 +1,7 @@
 defmodule Chess.Board do
   import Chess.Piece
 
-  @new_board_path "lib/chess/boards/new.txt"
+  @new_board_path "lib/chess/board/new.txt"
 
   @x_axis [:a, :b, :c, :d, :e, :f, :g, :h]
   @y_axis [8, 7, 6, 5, 4, 3, 2, 1]
