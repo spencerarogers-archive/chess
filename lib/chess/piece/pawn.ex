@@ -19,14 +19,25 @@ defmodule Chess.Piece.Pawn do
         end
       end,
       fn({x1,y1}) ->
-        space1 = {x1,y1+(1*dir)}
-        space2 = {x1,y1+(2*dir)}
-
-        valid = [space1, space2]
-        |> Enum.all?(fn(space) -> Chess.Board.unoccupied?(board, space) end)
+        case player do
+          :w ->
+            y1 == 2
+          :b ->
+            y1 == 7
+        end
         |> case do
           true ->
-            space2
+            space1 = {x1,y1+(1*dir)}
+            space2 = {x1,y1+(2*dir)}
+
+            [space1, space2]
+            |> Enum.all?(fn(space) -> Chess.Board.unoccupied?(board, space) end)
+            |> case do
+              true ->
+                space2
+              false ->
+                nil
+            end
           false ->
             nil
         end
