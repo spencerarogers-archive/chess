@@ -49,9 +49,9 @@ defmodule Chess.Piece do
 
     case piece_type do
       :p ->
-        Chess.Piece.Pawn.moves(color)
+        board
+        |> Chess.Piece.Pawn.moves(color)
         |> Enum.map(fn move -> move.({x1,y1}) end)
-        |> Enum.map(fn {move_type, {x2,y2}} -> {x2,y2} end)
     end
   end
 end

@@ -12,6 +12,15 @@ defmodule Chess.Board do
     |> deserialize
   end
 
+  def unoccupied?(board, space) do
+    case Chess.Board.piece_at(board, space) do
+      nil ->
+        true
+      _ ->
+        false
+    end
+  end
+
   def empty_board do
     @y_axis |> Enum.reduce(%{}, fn y, a1 ->
       row = @x_axis |> Enum.reduce(%{}, fn(x, a2) ->
