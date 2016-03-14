@@ -92,6 +92,8 @@ defmodule Chess.Piece do
           |> Enum.reduce(set, &(MapSet.put(&2,&1)))
         {x2,y2} ->
           MapSet.put(set, {x2,y2})
+        [] ->
+          set
         nil ->
           set
       end
