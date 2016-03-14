@@ -7,7 +7,11 @@ defmodule Chess.Board do
   @y_axis [8, 7, 6, 5, 4, 3, 2, 1]
 
   def new do
-    @new_board_path
+    load(@new_board_path)
+  end
+
+  def load(path) do
+    path
     |> File.read!
     |> deserialize
   end

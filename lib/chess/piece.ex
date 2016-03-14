@@ -44,14 +44,26 @@ defmodule Chess.Piece do
     end
   end
 
+  def home_row?(color, y) do
+    case color do
+      :white ->
+        y == 2
+      :black ->
+        y == 7
+    end
+  end
+
+  def direction(color) do
+    if(color == :white, do: 1, else: -1)
+  end
+
   def valid_movements(board, {x1,y1}) do
     %Chess.Piece{name: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
 
     case piece_type do
       :p ->
         board
-        |> Chess.Piece.Pawn.moves(color)
-        |> Enum.map(fn move -> move.({x1,y1}) end)
+        |> Chess.Piece.Pawn.moves({x1,y1}, color)
     end
   end
 end

@@ -1,11 +1,6 @@
 defmodule Chess.Piece.Pawn do
-  def moves(board, player) do
-    dir = case player do
-            :w ->
-              1
-            :b ->
-              -1
-          end
+  def move_definitions(board, color) do
+    dir = Chess.Piece.direction(color)
 
     [
       fn({x1,y1}) ->
@@ -19,12 +14,8 @@ defmodule Chess.Piece.Pawn do
         end
       end,
       fn({x1,y1}) ->
-        case player do
-          :w ->
-            y1 == 2
-          :b ->
-            y1 == 7
-        end
+        color
+        |> Chess.Piece.home_row?(y1)
         |> case do
           true ->
             space1 = {x1,y1+(1*dir)}
@@ -47,5 +38,13 @@ defmodule Chess.Piece.Pawn do
       # fn({x,y}) -> {:en_passant, {x-1, y+(1*dir)}} end,
       # fn({x,y}) -> {:en_passant, {x+1, y+(1*dir)}} end
     ]
+  end
+
+  def moves(board, {x1,y1}) do
+    piece = Chess.Board.piece_at(board, {x1,y1})
+
+    board
+    |> move_definitions(piece.color)
+    |> Enum.map(fn move -> move.({x1,y1}) end)
   end
 end
