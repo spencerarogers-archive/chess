@@ -74,6 +74,9 @@ defmodule Chess.Piece do
     |> Enum.reduce(MapSet.new, fn (move_func, set) ->
       move_func.({x1,y1})
       |> case do
+        [head | tail] ->
+          [head | tail]
+          |> Enum.reduce(set, &(MapSet.put(&2,&1)))
         {x2,y2} ->
           MapSet.put(set, {x2,y2})
         nil ->

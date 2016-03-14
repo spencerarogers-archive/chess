@@ -6,6 +6,28 @@ defmodule Chess.Board do
   @x_axis [1, 2, 3, 4, 5, 6, 7, 8]
   @y_axis [8, 7, 6, 5, 4, 3, 2, 1]
 
+  @min_x 1
+  @min_y 1
+
+  @max_x 8
+  @max_y 8
+
+  def min_x do
+    @min_x
+  end
+
+  def min_y do
+    @min_y
+  end
+
+  def max_x do
+    @max_x
+  end
+
+  def max_y do
+    @max_y
+  end
+
   def new do
     load(@new_board_path)
   end
@@ -35,8 +57,18 @@ defmodule Chess.Board do
     end)
   end
 
-  def piece_at(board, {x, y}) do
+  def piece_at(board, {x,y}) do
     board[{x,y}]
+  end
+
+  def color_at(board, {x,y}) do
+    piece = piece_at(board, {x,y})
+
+    if piece do
+      piece.color
+    else
+      nil
+    end
   end
 
   def serialize(board) do
