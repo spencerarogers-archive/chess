@@ -3,27 +3,27 @@ defmodule Chess.Piece do
 
   @pieces [:k, :q, :r, :b, :n, :p]
   @pieces_to_utf8 %{
-    :k => %{ :w => "♔", :b => "♚" },
-    :q => %{ :w => "♕", :b => "♛" },
-    :r => %{ :w => "♖", :b => "♜" },
-    :b => %{ :w => "♗", :b => "♝" },
-    :n => %{ :w => "♘", :b => "♞" },
-    :p => %{ :w => "♙", :b => "♟" }
+    :k => %{ :white => "♔", :black => "♚" },
+    :q => %{ :white => "♕", :black => "♛" },
+    :r => %{ :white => "♖", :black => "♜" },
+    :b => %{ :white => "♗", :black => "♝" },
+    :n => %{ :white => "♘", :black => "♞" },
+    :p => %{ :white => "♙", :black => "♟" }
   }
 
   @utf8_to_pieces %{
-    "♔" => {:k, :w},
-    "♕" => {:q, :w},
-    "♖" => {:r, :w},
-    "♗" => {:b, :w},
-    "♘" => {:n, :w},
-    "♙" => {:p, :w},
-    "♚" => {:k, :b},
-    "♛" => {:q, :b},
-    "♜" => {:r, :b},
-    "♝" => {:b, :b},
-    "♞" => {:n, :b},
-    "♟" => {:p, :b}
+    "♔" => {:k, :white},
+    "♕" => {:q, :white},
+    "♖" => {:r, :white},
+    "♗" => {:b, :white},
+    "♘" => {:n, :white},
+    "♙" => {:p, :white},
+    "♚" => {:k, :black},
+    "♛" => {:q, :black},
+    "♜" => {:r, :black},
+    "♝" => {:b, :black},
+    "♞" => {:n, :black},
+    "♟" => {:p, :black}
   }
 
   def piece_to_utf8(piece) do
