@@ -63,7 +63,7 @@ defmodule Chess.Piece do
     case piece_type do
       :p ->
         board
-        |> Chess.Piece.Pawn.moves({x1,y1}, color)
+        |> Chess.Piece.Pawn.moves({x1,y1})
     end
   end
 end

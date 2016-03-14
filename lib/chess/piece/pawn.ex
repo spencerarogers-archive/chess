@@ -42,9 +42,18 @@ defmodule Chess.Piece.Pawn do
 
   def moves(board, {x1,y1}) do
     piece = Chess.Board.piece_at(board, {x1,y1})
+    moves = MapSet.new
 
     board
     |> move_definitions(piece.color)
-    |> Enum.map(fn move -> move.({x1,y1}) end)
+    |> Enum.reduce(moves, fn (move_func, set) ->
+      move_func.({x1,y1})
+      |> case do
+        {x2,y2} ->
+          MapSet.put(set, {x2,y2})
+        nil ->
+          # noop
+      end
+    end)
   end
 end

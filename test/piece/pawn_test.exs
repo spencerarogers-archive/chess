@@ -6,11 +6,14 @@ defmodule Chess.Piece.PawnTest do
     {:ok, [board: Chess.Board.load('test/fixtures/pawn.txt')]}
   end
 
-  test "move forward 1 unoccupied space", context do
-    context[:board]
+  test "moving from home row", context do
+    moves = context[:board]
     |> Chess.Piece.Pawn.moves({1,2})
 
-    moves = [{1,3}, {1,4}]
+    [{1,3}, {1,4}]
+    |> MapSet.new
+    |> MapSet.equal?(moves)
+    |> assert
   end
 
   test "move forward 1 self-occupied space", context do
