@@ -5,43 +5,43 @@ defmodule Chess.Piece.Rook do
         x2 = x1
         (y1+1)..Chess.Board.max_y
         |> Enum.reduce_while([], fn(y2,acc) ->
-          reduce_move_while(acc, board, {x2,y2})
+          reduce_move_while(acc, board, color, {x2,y2})
         end)
       end,
       fn({x1,y1}) ->
         x2 = x1
         (y1-1)..Chess.Board.min_y
         |> Enum.reduce_while([], fn(y2,acc) ->
-          reduce_move_while(acc, board, {x2,y2})
+          reduce_move_while(acc, board, color, {x2,y2})
         end)
       end,
       fn({x1,y1}) ->
         y2 = y1
         (x1+1)..Chess.Board.max_x
         |> Enum.reduce_while([], fn(x2,acc) ->
-          reduce_move_while(acc, board, {x2,y2})
+          reduce_move_while(acc, board, color, {x2,y2})
         end)
       end,
       fn({x1,y1}) ->
         y2 = y1
         (x1-1)..Chess.Board.min_x
         |> Enum.reduce_while([], fn(x2,acc) ->
-          reduce_move_while(acc, board, {x2,y2})
+          reduce_move_while(acc, board, color, {x2,y2})
         end)
       end
     ]
   end
 
-  defp reduce_move_while(acc, board, {x2,y2}) do
-    board
-    |> Chess.Board.color_at({x2,y2})
+  defp reduce_move_while(acc, board, active_color, {x2,y2}) do
+    Chess.Board.color_at(board, {x2,y2})
+    |> Chess.Piece.relation(active_color)
     |> case do
-       nil ->
-         {:cont, Enum.concat(acc, [{x2,y2}])}
-       :black ->
-         {:halt, Enum.concat(acc, [{x2,y2}])}
-       :white ->
-         {:halt, acc}
-       end
+     :friendly ->
+       {:halt, acc}
+     :enemy ->
+       {:halt, Enum.concat(acc, [{x2,y2}])}
+     nil ->
+       {:cont, Enum.concat(acc, [{x2,y2}])}
+     end
   end
 end

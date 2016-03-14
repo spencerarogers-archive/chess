@@ -62,6 +62,19 @@ defmodule Chess.Piece do
     end
   end
 
+  def relation(c1, c2) do
+    if c1 && c2 do
+      cond do
+        c1 == c2 ->
+          :friendly
+        c1 != c2 ->
+          :enemy
+      end
+    else
+      nil
+    end
+  end
+
   def direction(color) do
     if(color == :white, do: 1, else: -1)
   end
