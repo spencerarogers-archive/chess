@@ -60,10 +60,15 @@ defmodule Chess.Piece do
   def valid_movements(board, {x1,y1}) do
     %Chess.Piece{name: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
 
-    case piece_type do
-      :p ->
-        board
-        |> Chess.Piece.Pawn.moves({x1,y1})
-    end
+    Chess.Piece.Pawn.move_definitions(board, color)
+    |> Enum.reduce(MapSet.new, fn (move_func, set) ->
+      move_func.({x1,y1})
+      |> case do
+        {x2,y2} ->
+          MapSet.put(set, {x2,y2})
+        nil ->
+          set
+      end
+    end)
   end
 end

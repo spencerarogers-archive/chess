@@ -39,21 +39,4 @@ defmodule Chess.Piece.Pawn do
       # fn({x,y}) -> {:en_passant, {x+1, y+(1*dir)}} end
     ]
   end
-
-  def moves(board, {x1,y1}) do
-    piece = Chess.Board.piece_at(board, {x1,y1})
-    moves = MapSet.new
-
-    board
-    |> move_definitions(piece.color)
-    |> Enum.reduce(moves, fn (move_func, set) ->
-      move_func.({x1,y1})
-      |> case do
-        {x2,y2} ->
-          MapSet.put(set, {x2,y2})
-        nil ->
-          # noop
-      end
-    end)
-  end
 end
