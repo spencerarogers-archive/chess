@@ -13,27 +13,33 @@ defmodule Chess.Piece.PawnTest do
     {:ok, [board: Chess.Board.load('test/fixtures/pawn.txt')]}
   end
 
-  test "moving from home row", context do
-    moves = context[:board]
+  test "moves from home row", context do
+    context[:board]
     |> Chess.Piece.valid_movements({1,2})
     |> assert_moves_equal([{1,3}, {1,4}])
   end
 
-  test "moving from non-home row", context do
-    moves = context[:board]
+  test "moves from non-home row", context do
+    context[:board]
     |> Chess.Piece.valid_movements({5,3})
     |> assert_moves_equal([{5,4}])
   end
 
-  test "move forward 1 opponent-occupied space", context do
+  test "moves from close obstructed home row", context do
+    context[:board]
+    |> Chess.Piece.valid_movements({3,2})
+    |> assert_moves_equal([])
   end
 
-  test "move forward 2 spaces from home row", context do
+  test "moves from far obstructed home row", context do
+    context[:board]
+    |> Chess.Piece.valid_movements({4,2})
+    |> assert_moves_equal([{4,3}])
   end
 
-  test "move forward 2 spaces from non-home row", context do
-  end
-
-  test "move forward 2 spaces from home row with obstruction", context do
+  test "moves from fully obstructed home row", context do
+    context[:board]
+    |> Chess.Piece.valid_movements({6,2})
+    |> assert_moves_equal([])
   end
 end
