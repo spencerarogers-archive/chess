@@ -15,7 +15,7 @@ defmodule Chess.Piece.RookTest do
 
   test "standard movement", context do
     context[:board]
-    |> Chess.Piece.valid_movements({6,4})
+    |> Chess.Board.valid_movements({6,4})
     |> assert_moves_equal([
       {7,4}, {8,4}, {6,3}, {6,5}, {6,6}, {6,7},
       {5,4}, {4,4}, {3,4}, {2,4}, {1,4}

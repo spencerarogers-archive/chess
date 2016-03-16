@@ -40,7 +40,7 @@ defmodule Chess.Game do
 
   def validate_move(board, {x1,y1}, {x2,y2}) do
     board
-    |> Chess.Piece.valid_movements({x1,y1})
+    |> valid_movements({x1,y1})
     |> Enum.member?({x2,y2})
     |> case do
        true ->
