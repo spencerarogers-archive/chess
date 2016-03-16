@@ -1,17 +1,17 @@
 defmodule Chess.Board do
   @utf8_to_pieces %{
-    "♔" => {:k, :white},
-    "♕" => {:q, :white},
-    "♖" => {:r, :white},
-    "♗" => {:b, :white},
-    "♘" => {:n, :white},
-    "♙" => {:p, :white},
-    "♚" => {:k, :black},
-    "♛" => {:q, :black},
-    "♜" => {:r, :black},
-    "♝" => {:b, :black},
-    "♞" => {:n, :black},
-    "♟" => {:p, :black}
+    "♔" => %Chess.Piece.King{color: :white},
+    "♕" => %Chess.Piece.Queen{color: :white},
+    "♖" => %Chess.Piece.Rook{color: :white},
+    "♗" => %Chess.Piece.Bishop{color: :white},
+    "♘" => %Chess.Piece.Knight{color: :white},
+    "♙" => %Chess.Piece.Pawn{color: :white},
+    "♚" => %Chess.Piece.King{color: :black},
+    "♛" => %Chess.Piece.Queen{color: :black},
+    "♜" => %Chess.Piece.Rook{color: :black},
+    "♝" => %Chess.Piece.Bishop{color: :black},
+    "♞" => %Chess.Piece.Knight{color: :black},
+    "♟" => %Chess.Piece.Pawn{color: :black}
   }
 
   @pieces_to_utf8 %{
@@ -44,12 +44,7 @@ defmodule Chess.Board do
   end
 
   def utf8_to_piece(char) do
-    case @utf8_to_pieces[char] do
-      {name, color} ->
-        %{name: name, color: color}
-      nil ->
-        nil
-    end
+    @utf8_to_pieces[char]
   end
 
   def min_x do
@@ -172,16 +167,16 @@ defmodule Chess.Board do
   end
 
   @piece_modules %{
-    :k => Chess.Piece.King,
-    :q => Chess.Piece.Queen,
-    :r => Chess.Piece.Rook,
-    :b => Chess.Piece.Bishop,
-    :n => Chess.Piece.Knight,
-    :p => Chess.Piece.Pawn
+    :king => Chess.Piece.King,
+    :queen => Chess.Piece.Queen,
+    :rook => Chess.Piece.Rook,
+    :bishop => Chess.Piece.Bishop,
+    :knight => Chess.Piece.Knight,
+    :pawn => Chess.Piece.Pawn
   }
 
   def valid_movements(board, {x1,y1}) do
-    %{name: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
+    %{type: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
     piece_module = Map.get(@piece_modules, piece_type)
 
     piece_module.move_definitions(board, color)
