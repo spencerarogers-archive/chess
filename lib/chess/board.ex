@@ -157,20 +157,10 @@ defmodule Chess.Board do
     x_int - a + 1
   end
 
-  @piece_modules %{
-    :king => Chess.Piece.King,
-    :queen => Chess.Piece.Queen,
-    :rook => Chess.Piece.Rook,
-    :bishop => Chess.Piece.Bishop,
-    :knight => Chess.Piece.Knight,
-    :pawn => Chess.Piece.Pawn
-  }
-
   def valid_movements(board, {x1,y1}) do
-    %{type: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
-    piece_module = Map.get(@piece_modules, piece_type)
-
-    piece_module.move_definitions(board, color)
+    board
+    |> Chess.Board.piece_at({x1,y1})
+    |> Chess.Piece.moves(board)
     |> Enum.reduce(MapSet.new, fn (move_func, set) ->
       move_func.({x1,y1})
       |> case do

@@ -50,4 +50,8 @@ defimpl Chess.Piece, for: Chess.Piece.Pawn do
       :black -> "♟"
     end
   end
+
+  def moves(piece, board) do
+    Chess.Piece.Pawn.move_definitions(board, piece.color)
+  end
 end

@@ -55,4 +55,8 @@ defimpl Chess.Piece, for: Chess.Piece.Rook do
       :black -> "♜"
     end
   end
+
+  def moves(piece, board) do
+    Chess.Piece.Rook.move_definitions(board, piece.color)
+  end
 end

@@ -9,4 +9,8 @@ defimpl Chess.Piece, for: Chess.Piece.Knight do
       :black -> "♞"
     end
   end
+
+  def moves(piece, board) do
+    []
+  end
 end
