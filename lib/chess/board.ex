@@ -28,6 +28,19 @@ defmodule Chess.Board do
     @max_y
   end
 
+  def direction(color) do
+    if(color == :white, do: 1, else: -1)
+  end
+
+  def home_row?(color, y) do
+    case color do
+      :white ->
+        y == 2
+      :black ->
+        y == 7
+    end
+  end
+
   def new do
     load(@new_board_path)
   end

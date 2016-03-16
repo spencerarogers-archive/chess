@@ -53,32 +53,6 @@ defmodule Chess.Piece do
     end
   end
 
-  def home_row?(color, y) do
-    case color do
-      :white ->
-        y == 2
-      :black ->
-        y == 7
-    end
-  end
-
-  def relation(c1, c2) do
-    if c1 && c2 do
-      cond do
-        c1 == c2 ->
-          :friendly
-        c1 != c2 ->
-          :enemy
-      end
-    else
-      nil
-    end
-  end
-
-  def direction(color) do
-    if(color == :white, do: 1, else: -1)
-  end
-
   def valid_movements(board, {x1,y1}) do
     %Chess.Piece{name: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
     piece_module = Map.get(@piece_modules, piece_type)

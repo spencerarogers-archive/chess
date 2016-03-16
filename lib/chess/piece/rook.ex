@@ -34,7 +34,7 @@ defmodule Chess.Piece.Rook do
 
   defp reduce_move_while(acc, board, active_color, {x2,y2}) do
     Chess.Board.color_at(board, {x2,y2})
-    |> Chess.Piece.relation(active_color)
+    |> Chess.Player.relation(active_color)
     |> case do
      :friendly ->
        {:halt, acc}

@@ -1,6 +1,6 @@
 defmodule Chess.Piece.Pawn do
   def move_definitions(board, color) do
-    dir = Chess.Piece.direction(color)
+    dir = Chess.Board.direction(color)
 
     [
       fn({x1,y1}) ->
@@ -15,7 +15,7 @@ defmodule Chess.Piece.Pawn do
       end,
       fn({x1,y1}) ->
         color
-        |> Chess.Piece.home_row?(y1)
+        |> Chess.Board.home_row?(y1)
         |> case do
           true ->
             space1 = {x1,y1+(1*dir)}
