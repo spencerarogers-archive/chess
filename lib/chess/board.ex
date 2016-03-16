@@ -1,5 +1,27 @@
 defmodule Chess.Board do
-  import Chess.Piece
+  @utf8_to_pieces %{
+    "♔" => {:k, :white},
+    "♕" => {:q, :white},
+    "♖" => {:r, :white},
+    "♗" => {:b, :white},
+    "♘" => {:n, :white},
+    "♙" => {:p, :white},
+    "♚" => {:k, :black},
+    "♛" => {:q, :black},
+    "♜" => {:r, :black},
+    "♝" => {:b, :black},
+    "♞" => {:n, :black},
+    "♟" => {:p, :black}
+  }
+
+  @pieces_to_utf8 %{
+    :k => %{ :white => "♔", :black => "♚" },
+    :q => %{ :white => "♕", :black => "♛" },
+    :r => %{ :white => "♖", :black => "♜" },
+    :b => %{ :white => "♗", :black => "♝" },
+    :n => %{ :white => "♘", :black => "♞" },
+    :p => %{ :white => "♙", :black => "♟" }
+  }
 
   @new_board_path "lib/chess/board/new.txt"
 
@@ -11,6 +33,24 @@ defmodule Chess.Board do
 
   @max_x 8
   @max_y 8
+
+  def piece_to_utf8(piece) do
+    case piece do
+      nil ->
+        ' '
+      _ ->
+        @pieces_to_utf8[piece.name][piece.color]
+    end
+  end
+
+  def utf8_to_piece(char) do
+    case @utf8_to_pieces[char] do
+      {name, color} ->
+        %Chess.Piece{name: name, color: color}
+      nil ->
+        nil
+    end
+  end
 
   def min_x do
     @min_x
