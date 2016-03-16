@@ -1,4 +1,6 @@
 defmodule Chess.Piece.Pawn do
+  defstruct type: :pawn, color: nil
+
   def move_definitions(board, color) do
     dir = Chess.Board.direction(color)
 
@@ -38,5 +40,14 @@ defmodule Chess.Piece.Pawn do
       # fn({x,y}) -> {:en_passant, {x-1, y+(1*dir)}} end,
       # fn({x,y}) -> {:en_passant, {x+1, y+(1*dir)}} end
     ]
+  end
+end
+
+defimpl Chess.Piece, for: Chess.Piece.Pawn do
+  def serialize(piece) do
+    case piece.color do
+      :white -> "♙"
+      :black -> "♟"
+    end
   end
 end

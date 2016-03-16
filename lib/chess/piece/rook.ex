@@ -1,4 +1,6 @@
 defmodule Chess.Piece.Rook do
+  defstruct type: :rook, color: nil
+
   def move_definitions(board, color) do
     [
       fn({x1,y1}) ->
@@ -43,5 +45,14 @@ defmodule Chess.Piece.Rook do
      nil ->
        {:cont, Enum.concat(acc, [{x2,y2}])}
      end
+  end
+end
+
+defimpl Chess.Piece, for: Chess.Piece.Rook do
+  def serialize(piece) do
+    case piece.color do
+      :white -> "♖"
+      :black -> "♜"
+    end
   end
 end

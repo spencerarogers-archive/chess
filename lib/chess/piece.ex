@@ -1,3 +1,3 @@
-defmodule Chess.Piece do
-  defstruct name: nil, color: nil
+defprotocol Chess.Piece do
+  def serialize(piece)
 end
