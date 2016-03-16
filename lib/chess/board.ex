@@ -46,7 +46,7 @@ defmodule Chess.Board do
   def utf8_to_piece(char) do
     case @utf8_to_pieces[char] do
       {name, color} ->
-        %Chess.Piece{name: name, color: color}
+        %{name: name, color: color}
       nil ->
         nil
     end
@@ -181,7 +181,7 @@ defmodule Chess.Board do
   }
 
   def valid_movements(board, {x1,y1}) do
-    %Chess.Piece{name: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
+    %{name: piece_type, color: color} = board |> Chess.Board.piece_at({x1,y1})
     piece_module = Map.get(@piece_modules, piece_type)
 
     piece_module.move_definitions(board, color)
