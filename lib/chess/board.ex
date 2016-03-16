@@ -14,15 +14,6 @@ defmodule Chess.Board do
     "♟" => %Chess.Piece.Pawn{color: :black}
   }
 
-  @pieces_to_utf8 %{
-    :k => %{ :white => "♔", :black => "♚" },
-    :q => %{ :white => "♕", :black => "♛" },
-    :r => %{ :white => "♖", :black => "♜" },
-    :b => %{ :white => "♗", :black => "♝" },
-    :n => %{ :white => "♘", :black => "♞" },
-    :p => %{ :white => "♙", :black => "♟" }
-  }
-
   @new_board_path "lib/chess/board/new.txt"
 
   @x_axis [1, 2, 3, 4, 5, 6, 7, 8]
@@ -39,7 +30,7 @@ defmodule Chess.Board do
       nil ->
         ' '
       _ ->
-        @pieces_to_utf8[piece.name][piece.color]
+        piece.serialize
     end
   end
 
