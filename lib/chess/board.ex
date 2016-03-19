@@ -54,6 +54,14 @@ defmodule Chess.Board do
     @max_y
   end
 
+  def apply_move(board, move) do
+    piece = Chess.Board.piece_at(board, move.from)
+
+    board
+    |> Map.put(move.from, nil)
+    |> Map.put(move.to, piece)
+  end
+
   def direction(color) do
     if(color == :white, do: 1, else: -1)
   end

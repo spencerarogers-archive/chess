@@ -3,7 +3,7 @@ defmodule GameTest do
   doctest Chess
 
   setup do
-    {:ok, game: Chess.Game.new}
+    {:ok, game: %Chess.Game{}}
   end
 
   test "a valid move", context do
@@ -20,7 +20,7 @@ defmodule GameTest do
     game = context[:game]
 
     piece  = Chess.Board.piece_at(game.board, {1, 2})
-    {:invalid_move, game2} = Chess.Game.move(game, {1, 2}, {2, 3})
+    {:invalid, game2} = Chess.Game.move(game, {1, 2}, {2, 3})
 
     assert(Chess.Board.piece_at(game2.board, {2, 3}) == nil)
     assert(Chess.Board.piece_at(game2.board, {1, 2}) == piece)
