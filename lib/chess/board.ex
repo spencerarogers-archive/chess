@@ -30,7 +30,7 @@ defmodule Chess.Board do
       nil ->
         ' '
       _ ->
-        piece.serialize
+        Chess.Piece.serialize(piece)
     end
   end
 
