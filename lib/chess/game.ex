@@ -1,7 +1,7 @@
 require IEx
 
 defmodule Chess.Game do
-  defstruct board: Chess.Board.new, active_player: :white, moves: []
+  defstruct board: Chess.Board.new,active_player: :white, moves: [], white_captures: [], black_captures: []
 
   def next_player(active_player) do
     case active_player do

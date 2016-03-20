@@ -85,6 +85,17 @@ defmodule Chess.Board do
     |> deserialize
   end
 
+  def opposing?(board, s1, s2) do
+    p1 = Chess.Board.piece_at(board, s1)
+    p2 = Chess.Board.piece_at(board, s2)
+
+    if p1 && p2 do
+      p1.color != p2.color
+    else
+      nil
+    end
+  end
+
   def unoccupied?(board, space) do
     case Chess.Board.piece_at(board, space) do
       nil ->

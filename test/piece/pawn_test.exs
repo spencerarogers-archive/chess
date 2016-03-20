@@ -22,7 +22,7 @@ defmodule Chess.Piece.PawnTest do
   test "moves from non-home row", context do
     context[:board]
     |> Chess.Board.valid_movements({5,3})
-    |> assert_moves_equal([{5,4}])
+    |> assert_moves_equal([{4,4},{5,4},{6,4}])
   end
 
   test "moves from close obstructed home row", context do
@@ -34,7 +34,7 @@ defmodule Chess.Piece.PawnTest do
   test "moves from far obstructed home row", context do
     context[:board]
     |> Chess.Board.valid_movements({4,2})
-    |> assert_moves_equal([{4,3}])
+    |> assert_moves_equal([{3,3},{4,3}])
   end
 
   test "moves from fully obstructed home row", context do
