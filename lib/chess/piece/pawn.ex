@@ -1,27 +1,6 @@
 defmodule Chess.Piece.Pawn do
   defstruct type: :pawn, color: nil
 
-  def captures(board, color) do
-    dir = Chess.Board.direction(color)
-
-    [
-      fn({x1,y1}) ->
-        dest = {x1+1, y1+(1*dir)}
-
-        board
-        |> Chess.Board.opposing?({x1,y1},dest)
-        |> if(do: dest, else: nil)
-      end,
-      fn({x1,y1}) ->
-        dest = {x1-1, y1+(1*dir)}
-
-        board
-        |> Chess.Board.opposing?({x1,y1},dest)
-        |> if(do: dest, else: nil)
-      end
-    ]
-  end
-
   def move_definitions(board, color) do
     dir = Chess.Board.direction(color)
 
@@ -56,8 +35,20 @@ defmodule Chess.Piece.Pawn do
             nil
         end
       end,
-      # fn({x,y}) -> {:capture,    {x+1, y+(1*dir)}} end,
-      # fn({x,y}) -> {:capture,    {x-1, y+(1*dir)}} end,
+      fn({x1,y1}) ->
+        dest = {x1+1, y1+(1*dir)}
+
+        board
+        |> Chess.Board.opposing?({x1,y1},dest)
+        |> if(do: dest, else: nil)
+      end,
+      fn({x1,y1}) ->
+        dest = {x1-1, y1+(1*dir)}
+
+        board
+        |> Chess.Board.opposing?({x1,y1},dest)
+        |> if(do: dest, else: nil)
+      end
       # fn({x,y}) -> {:en_passant, {x-1, y+(1*dir)}} end,
       # fn({x,y}) -> {:en_passant, {x+1, y+(1*dir)}} end
     ]
@@ -66,8 +57,7 @@ end
 
 defimpl Chess.Piece, for: Chess.Piece.Pawn do
   def moves(piece, board) do
-    Chess.Piece.Pawn.move_definitions(board, piece.color) ++
-    Chess.Piece.Pawn.captures(board, piece.color)
+    Chess.Piece.Pawn.move_definitions(board, piece.color)
   end
 
   def serialize(piece) do
